@@ -1,15 +1,13 @@
 1,000 most common Estonian words
 ================================
 
-(Work in progress)
+What are the 1,000 most common Estonian words? I'm an English speaker learning Estonian, and had trouble finding the answer. 
 
-What are the 1,000 most common Estonian words? I'm an English speak learning Estonian, and had trouble finding the answer.
-
-This was made using the Estonian Web 2019 corpus from the 2019 Estonian reference corpus
+This was made using the Estonian Web 2019 corpus from the 2019 Estonian reference corpus.
 
 \+ 
 
-Estonian is a "morphologically rich", as I learned the experts call it, language. Words change a lot depending on the grammatical context. For example "pood", "poodi", "poes", and "poest" are all forms of the same word (lemma), "pood", which means "store" (the forms above are a store, to the store, in the store, from the store). I'd like all of those forms to count for the same canonical form of the word, rather than counting them up separately. I used the Estonian natural language toolkit ([EstNLTK](https://github.com/estnltk/estnltk)) lemmatizer for this.  
+Estonian is a "morphologically rich", as I learned the experts call it, language. Words change a lot depending on the grammatical context. For example "pood", "poodi", "poes", and "poest" are all forms of the same underlyuing canonical word (lemma), "pood". (Which means "store"; the forms above are a store, to the store, in the store, from the store.) I'd like all of those forms to count for the same canonical form of the word, rather than counting them up separately. I used the lemmatizer in the Estonian natural language toolkit ([EstNLTK](https://github.com/estnltk/estnltk)) for this.  
 
 \+
 
@@ -22,22 +20,11 @@ Following the [`estnltk`](https://github.com/estnltk/estnltk) install instructio
 ```bash 
 conda activate py37
 python3 counts.py
-# this will write counts.csv
+# this will write counts.csv and wf.pickle
 Rscript counts2json.R
-# pull top 100 from CSV to words.json
+# pull top 1000 from CSV to words.json
 ```
 
 From there I manually pulled the JSON blob and pasted it into `index.html`. (I don't know Javascript...)
 
-For a basic website, show common words as html table?
-
-Ideas:
-
-- Clean, minimal table with order, lemma, freq
-- Add bar graph for freq?
-- Add search option to filter table
-- Add POS tag 
-- Add POS tag to search option, i.e. i can search most common nouns, verbs, etc. 
-
-Searchable HTML table: https://www.w3schools.com/howto/howto_js_filter_table.asp
-JS scripts for search: https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
+_Are these really the 1,000 most common words in Estonian?_ I don't know, I'm not a linguist. I am sure that these are the 1,000 most common lemmas in the first 5,000 documents in the Estonian 2019 web corpus. How representative that is of the language in other contexts, I don't know. 
