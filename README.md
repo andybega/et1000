@@ -19,12 +19,10 @@ Following the [`estnltk`](https://github.com/estnltk/estnltk) install instructio
 
 ```bash 
 conda activate py37
-python3 counts.py
+python3 count.py
 # this will write counts.csv and wf.pickle
-Rscript counts2json.R
-# pull top 1000 from CSV to words.json
+Rscript make-index.R
+# this will insert the word data into index.html
 ```
-
-From there I manually pulled the JSON blob and pasted it into `index.html`. (I don't know Javascript...)
 
 _Are these really the 1,000 most common words in Estonian?_ I don't know, I'm not a linguist. I am sure that these are the 1,000 most common lemmas in the first 5,000 documents in the Estonian 2019 web corpus. How representative that is of the language in other contexts, I don't know. 
