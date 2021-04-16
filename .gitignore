@@ -2,3 +2,5 @@
 etnc19_web_2019.prevert
 et1000.code-workspace
 .vscode
+.DS_Store
+.Rproj.user

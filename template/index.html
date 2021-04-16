@@ -2,6 +2,7 @@
 <html lang=en>
 <head>
   <title>ET 1000</title>
+  <link rel="shortcut icon" type='image/png' href="/favicon.png" />
   <meta name="viewport" content="width=device-width">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
@@ -16,13 +17,14 @@
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-wordData = [[1,"olema"],[2,"ja"],[3,"see"],[4,"mina"],[5,"et"],[6,"ei"],[7,"kui"],[8,"mis"],[9,"ka"],[10,"saama"]]
+wordData = [[1,"olema","V"],[2,"ja","J"],[3,"see","P"],[4,"mina","P"],[5,"et","J"],[6,"ei","V"],[7,"kui","J"],[8,"kui","D"],[9,"mis","P"],[10,"ka","D"]]
 </script>
 </head>
 <body>
 <h1>1,000 most common words in Estonian</h1>
 <p>The table below show the 1,000 most common words in Estonian.</p>
 <p><a href='about.html'>About</a></p>
+<p><a href='pos.html'>Parts of speech (POS) table</a></p>
 <table id='example' class='' style='width: auto'>
 </table>
 <script>
@@ -33,6 +35,7 @@ wordData = [[1,"olema"],[2,"ja"],[3,"see"],[4,"mina"],[5,"et"],[6,"ei"],[7,"kui"
         columns: [
           { title: "No." },
           { title: "Word" },
+          { title: "POS"},
           { title: "Rank",
               data: 0,
               render: function(data, type, row, meta) {

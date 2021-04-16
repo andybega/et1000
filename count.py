@@ -5,6 +5,7 @@ from collections import Counter
 import pandas as pd
 from tqdm import tqdm
 import pickle
+import yaml
 import logging
 log = logging.getLogger("et1000")
 
@@ -20,51 +21,72 @@ max_docs = 10000
 wf = Counter()
 for text_obj in docs:
 	text_obj = text_obj.tag_layer('morph_analysis')
-	lc  = text_obj.morph_analysis.groupby(['lemma']).count
-	res = Counter({k[0]:v for k, v in lc.items()})
+	lc  = text_obj.morph_analysis.groupby(['lemma', 'partofspeech']).count
+	res = Counter({k:v for k, v in lc.items()})
 	wf += res
 	n = n + 1
 	if (n > max_docs):
 		break
 
-# Removing non-lemmas is easier by re-loading the word dict than runnng that 
+# Removing non-lemmas is easier by re-loading the word dict than running that 
 # loop above again
-#wf = pickle.load(open('wf.pickle', 'rb'))
+pickle.dump(wf, open('wf.pickle', 'wb'))
+wf = pickle.load(open('wf.pickle', 'rb'))
 
-# Remove not-really-lemmas
-ignore = ['s', '.', ',', '"', '-', '?', '(', ')', ':', 'OK', '!', 'NB', '§',
-          ';', '...', '/', '_', 'OÜ', '*', '`', '’', '$', '[', ']',
-          ':)', 'AS', 'I', 'II', '..', 'nr', '=', '+', '€', 'a', '•',
-          '1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.', '9.', 'ca', '&',
-          '2017.', '2018.', '2019.']
-
+# Remove by part of speech
+# https://github.com/estnltk/estnltk/blob/version_1.6/tutorials/nlp_pipeline/A_02_morphology_tables.ipynb
+# H: proper noun
+# Y: abbreviation
+# Z: punctuation
+ignore = ['H', 'Y', 'Z']
 for word in list(wf):
-    if word in ignore:
-        del wf[word]
-    if word[0].isdigit():
+    if word[1] in ignore:
         del wf[word]
 
-# Remove proper nouns (starting with capital letter)
+# Remove any other words starting with a capital letter, e.g. "CX-3"
 for word in list(wf):
     if word[0].isupper():
         #log.info('Removing \'' + word + '\'')
         del wf[word]
 
-# Save the lemma freq Counter, since it takes a long time to run it
-with open('wf.pickle', 'wb') as outputfile:
-    pickle.dump(wf, outputfile)
+# Remove any leftover idiosyncratic words as well as words starting with a 
+# digit, e.g. dates. 
+ignore = ['s', '.', ',', '"', '-', '?', '(', ')', ':', 'OK', '!', 'NB', '§',
+          ';', '...', '/', '_', 'OÜ', '*', '`', '’', '$', '[', ']',
+          ':)', 'AS', 'I', 'II', '..', 'nr', '=', '+', '€', 'a', '•',
+          '1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.', '9.', 'ca', '&',
+          '2017.', '2018.', '2019.', '20.']
+
+for word in list(wf):
+    if word[0] in ignore:
+        del wf[word]
+    if word[0].isdigit():
+        del wf[word]
 
 wf.most_common(10)
 
 # Convert to data frame and write top 1000 to CSV
-counts = pd.DataFrame.from_dict(wf, orient='index').reset_index()
-counts = counts.rename(columns={'index':'Word', 0:'Count'})
-counts = counts.sort_values(by=['Count'], ascending=False)
-counts = counts.reset_index(drop = True)
-counts["Frequency"] = counts["Count"] / counts["Count"].sum()
-counts['Rank'] = counts.reset_index().index + 1
-counts = counts[['Rank', 'Word', 'Count', 'Frequency']]
+counts = pd.Series(wf).to_frame(name='Count')
+counts.index = counts.index.set_names(['Word', 'POS'])
+counts.reset_index(inplace=True)
 
+# sort and re-index
+counts = counts.sort_values(by=['Count'], ascending=False)
+counts = counts.reset_index(drop=True)
+
+# add Rank columns
+counts['Rank'] = counts.index + 1
+
+# Record the total number of words in case we want frequency later
+stats = {"max_docs": max_docs,
+         "lemmas": counts.shape[0],
+         "total_words": counts['Count'].sum().item()}
+with open(r'count-stats.yml', 'w') as file:
+    documents = yaml.dump(stats, file, sort_keys=False)
+
+# Save the top 1,000 only
+counts = counts[['Rank', 'Word', 'POS', 'Count']]
 counts = counts.head(1000)
 counts.to_csv("counts.csv", index = False)
+
 
