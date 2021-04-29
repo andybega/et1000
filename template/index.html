@@ -13,6 +13,19 @@
       padding: 2ch;
       margin: auto;
     }
+
+    #rankContainer {
+      display: inline-block;
+      height: 8px;
+      width: 100%;
+      border: 1px solid SlateGrey;
+    }
+
+    #rank {
+      display:block;
+      height:100%;
+      background-color:SkyBlue;
+    }
   </style>
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
@@ -26,6 +39,7 @@ wordData = [[1,"olema","V"],[2,"ja","J"],[3,"see","P"],[4,"mina","P"],[5,"et","J
   <a href='about.html'>About</a> <br>
   <a href='pos.html'>Parts of speech (POS) table</a>
 </p>
+
 <p>The table below show the 1,000 most common words in Estonian.</p>
 <table id='example' class='' style='width: auto'>
 </table>
@@ -42,7 +56,8 @@ wordData = [[1,"olema","V"],[2,"ja","J"],[3,"see","P"],[4,"mina","P"],[5,"et","J
               data: 0,
               render: function(data, type, row, meta) {
                     return type === 'display' ?
-                        '<progress value="' + (1000 - data) + '" max="999"></progress>' :
+                        '<span id="rankContainer"><span id="rank" style="width:' + ((1000 - data)/10) + '%"></span></span>'
+                        :
                         data;
                 } }
         ],
