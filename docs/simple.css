@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 70ch;
+  padding: 2ch;
+  margin: auto;
+}
+
+/* Datatables specific style */
+#rankContainer {
+  display: inline-block;
+  height: 8px;
+  width: 100%;
+  border: 1px solid SlateGrey;
+}
+
+#rank {
+  display:block;
+  height:100%;
+  background-color:SkyBlue;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+}
+
+table th {
+  border-bottom: 2px solid;
+  font-weight: bold;
+  padding: 5px 5px;
+}
+
+table tr {
+  border-bottom: 1px Gray dotted
+}
+
+#postable td {
+  padding: 4px 5px;
+}
+
+#postable td:first-child {
+  text-align: center;
+}
+
+

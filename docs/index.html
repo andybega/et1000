@@ -6,27 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      max-width: 70ch;
-      padding: 2ch;
-      margin: auto;
-    }
-
-    #rankContainer {
-      display: inline-block;
-      height: 8px;
-      width: 100%;
-      border: 1px solid SlateGrey;
-    }
-
-    #rank {
-      display:block;
-      height:100%;
-      background-color:SkyBlue;
-    }
-  </style>
+  <link rel="stylesheet" href="simple.css">
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
@@ -41,11 +21,11 @@ wordData = [[1,"olema","V"],[2,"ja","J"],[3,"see","P"],[4,"mina","P"],[5,"et","J
 </p>
 
 <p>The table below show the 1,000 most common words in Estonian.</p>
-<table id='example' class='' style='width: auto'>
+<table id='top1000' class='' style='width: auto'>
 </table>
 <script>
   $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#top1000').DataTable( {
         data: wordData,
         "order": [[0, "asc"]],
         columns: [
