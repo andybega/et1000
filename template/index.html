@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang=en>
+
 <head>
   <title>ET 1000</title>
   <link rel="shortcut icon" type='image/png' href="/favicon.png" />
@@ -7,43 +8,131 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="simple.css">
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-wordData = [[1,"olema","V"],[2,"ja","J"],[3,"see","P"],[4,"mina","P"],[5,"et","J"],[6,"ei","V"],[7,"kui","J"],[8,"kui","D"],[9,"mis","P"],[10,"ka","D"]]
-</script>
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 </head>
-<body>
-<h1>1,000 most common words in Estonian</h1>
-<p>
-  <a href='about.html'>About</a> <br>
-  <a href='pos.html'>Parts of speech (POS) table</a>
-</p>
 
-<p>The table below show the 1,000 most common words in Estonian.</p>
-<table id='top1000' class='' style='width: auto'>
-</table>
-<script>
-  $(document).ready(function() {
-    $('#top1000').DataTable( {
-        data: wordData,
+<body>
+  <h1>1,000 most common words in Estonian</h1>
+  <p>
+    <a href='about.html'>About</a> <br>
+    <a href='pos.html'>Parts of speech (POS) table</a>
+  </p>
+
+  <p>The table below show the 1,000 most common words in Estonian.</p>
+
+  <div>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_noun" value="S" checked>
+      <label for="pos_noun">Noun (S)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_verb" value="V" checked>
+      <label for="pos_verb">Verb (V)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_adverb" value="D" checked>
+      <label for="pos_adverb">Adverb (D)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_adjective" value="ACU" checked>
+      <label for="pos_adjective">Adjective (A,C,U)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_adposition" value="K" checked>
+      <label for="pos_adposition">Adposition (K)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_pronoun" value="P" checked>
+      <label for="pos_pronoun">Pronoun (P)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_conjunction" value="J" checked>
+      <label for="pos_conjunction">Conjunction (J)</label>
+    </span>
+    <span style="white-space: nowrap;">
+      <input class="pos_selection" type="checkbox" id="pos_other" value="NGIO" checked>
+      <label for="pos_other">Other (N,O,G,I)</label>
+    </span>
+    <br>
+    <input class="pos_selection" type="button" id="pos_update" value="Update selection">
+    <input id="check-all-pos" type="button" value="Check all">
+    <input id="uncheck-all-pos" type="button" value="Uncheck all">
+  </div>
+
+
+
+  <table id='top1000' class='' style='width: auto'>
+  </table>
+
+  <script type="text/javascript">
+    // return an array of POS tags to filter data with
+    function posSelection() {
+      var checkedBoxes = $("input.pos_selection:checked").map(function () {
+        var out = $(this).val();
+        if (out.length > 1) {
+          out = out.split("")
+        }
+        return out;
+      }).get();
+      return checkedBoxes;
+    }
+
+    wordData = [[1, "olema", "V"], [2, "ja", "J"], [3, "see", "P"], [4, "mina", "P"], [5, "et", "J"], [6, "ei", "V"], [7, "kui", "J"], [8, "kui", "D"], [9, "mis", "P"], [10, "ka", "D"]]
+
+    $(document).ready(function () {
+
+      // By default show full table with all POS
+      result = wordData;
+
+      var datatable = $('#top1000').DataTable({
+        data: result,
         "order": [[0, "asc"]],
         columns: [
           { title: "No." },
           { title: "Word" },
-          { title: "POS"},
-          { title: "Rank",
-              data: 0,
-              render: function(data, type, row, meta) {
-                    return type === 'display' ?
-                        '<span id="rankContainer"><span id="rank" style="width:' + ((1000 - data)/10) + '%"></span></span>'
-                        :
-                        data;
-                } }
+          { title: "POS" },
+          {
+            title: "Rank",
+            data: 0,
+            render: function (data, type, row, meta) {
+              return type === 'display' ?
+                '<span id="rankContainer"><span id="rank" style="width:' + ((1000 - data) / 10) + '%"></span></span>'
+                :
+                data;
+            }
+          }
         ],
         "paging": false
-    } );
-} );
-</script>
+      });
+
+      // Update table if POS submit button is clicked
+      $("#pos_update").click(function () {
+        posWant = posSelection();
+
+        result = wordData.filter(item => posWant.includes(item[2]));
+
+        datatable.clear();
+        datatable.rows.add(result);
+        datatable.draw();
+      });
+
+      // Reset (check all) POS checkboxes
+      $('#check-all-pos').click(function () {
+        $(':checkbox').each(function () {
+          this.checked = true;
+        });
+      });
+
+      // Uncheck all POS checkboxes
+      $('#uncheck-all-pos').click(function () {
+        $(':checkbox').each(function () {
+          this.checked = false;
+        })
+      })
+    });
+
+  </script>
 </body>
+
 </html>
