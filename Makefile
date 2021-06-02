@@ -1,14 +1,14 @@
 
 .PHONY: docs/index.html docs/simple.css
 
-docs/index.html: template/index.html
+docs/index.html: src/index.html
 	Rscript make-index.R
 
-docs/simple.css: template/simple.css
-	cp template/simple.css docs/
+docs/simple.css: src/simple.css
+	cp src/simple.css docs/
 
-docs/about.html: template/about.html
-	cp template/about.html docs/
+docs/about.html: src/about.html
+	cp src/about.html docs/
 
-docs/pos.html: template/pos.html
-	cp template/pos.html docs/
+docs/pos.html: src/pos.html
+	cp src/pos.html docs/

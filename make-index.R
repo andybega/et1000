@@ -25,11 +25,11 @@ words <- toJSON(words, dataframe = "values", pretty = FALSE)
 # pre-pend the JS object definition
 words <- paste0("wordData = ", words)
 
-# Insert the word data into the html template
-index <- readLines("template/index.html")
+# Insert the word data into the html src
+index <- readLines("src/index.html")
 line <- grep("wordData = ", index)
 index[line] <- words
 writeLines(index, "docs/index.html")
 
-other_files <- setdiff(dir("template/"), "index.html")
-invisible(file.copy(file.path("template", other_files), "docs/", overwrite = TRUE))
+other_files <- setdiff(dir("src/"), "index.html")
+invisible(file.copy(file.path("src", other_files), "docs/", overwrite = TRUE))
