@@ -5,11 +5,11 @@ What are the 1,000 most common Estonian words? I'm an English speaker learning E
 
 This was made using the Estonian Web 2019 corpus from the 2019 Estonian reference corpus.
 
-\+ 
+        \+ 
 
-Estonian is a "morphologically rich", as I learned the experts call it, language. Words change a lot depending on the grammatical context. For example "pood", "poodi", "poes", and "poest" are all forms of the same underlyuing canonical word (lemma), "pood". (Which means "store"; the forms above are a store, to the store, in the store, from the store.) I'd like all of those forms to count for the same canonical form of the word, rather than counting them up separately. I used the lemmatizer in the Estonian natural language toolkit ([EstNLTK](https://github.com/estnltk/estnltk)) for this.  
+Estonian is a "morphologically rich" language, as I learned the experts call it. Words change a lot depending on the grammatical context. For example "pood", "poodi", "poes", and "poest" are all forms of the same underlying canonical word (lemma), "pood". Which by the way means "store"; the forms above are _a store_, _to the store_, _in the store_, _from the store_. I'd like all of those forms to count for the same canonical form of the word, rather than counting them up separately. I used the lemmatizer in the Estonian natural language toolkit ([EstNLTK](https://github.com/estnltk/estnltk)) for this.  
 
-\+
+        \+
 
 Some very hacky scripts to get a basic website with the words. 
 
@@ -25,4 +25,4 @@ Rscript make-index.R
 # this will insert the word data into index.html
 ```
 
-_Are these really the 1,000 most common words in Estonian?_ I don't know, I'm not a linguist. I am sure that these are the 1,000 most common lemmas in the first 5,000 documents in the Estonian 2019 web corpus. How representative that is of the language in other contexts, I don't know. 
+Finally, _Are these really the 1,000 most common words in Estonian?_ I don't know, I'm not a linguist. I am sure that these are the 1,000 most common lemmas in the first 10,000 documents in the Estonian 2019 web corpus. How representative that is of the language in other contexts, I don't know. 

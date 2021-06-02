@@ -12,3 +12,6 @@ docs/about.html: src/about.html
 
 docs/pos.html: src/pos.html
 	cp src/pos.html docs/
+
+docs/favicon.ico: src/favicon.png
+	convert -resize x16 -gravity center -crop 16x16+0+0 src/favicon.png -flatten -colors 256 -background transparent docs/favicon.ico
