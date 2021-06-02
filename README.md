@@ -5,11 +5,7 @@ What are the 1,000 most common Estonian words? I'm an English speaker learning E
 
 This was made using the Estonian Web 2019 corpus from the 2019 Estonian reference corpus.
 
-        \+ 
-
 Estonian is a "morphologically rich" language, as I learned the experts call it. Words change a lot depending on the grammatical context. For example "pood", "poodi", "poes", and "poest" are all forms of the same underlying canonical word (lemma), "pood". Which by the way means "store"; the forms above are _a store_, _to the store_, _in the store_, _from the store_. I'd like all of those forms to count for the same canonical form of the word, rather than counting them up separately. I used the lemmatizer in the Estonian natural language toolkit ([EstNLTK](https://github.com/estnltk/estnltk)) for this.  
-
-        \+
 
 Some very hacky scripts to get a basic website with the words. 
 
