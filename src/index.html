@@ -13,15 +13,16 @@
 </head>
 
 <body>
-  <h1>1,000 most common words in Estonian</h1>
+  <h1>The 1,000 most common Estonian words</h1>
   <p>
     <a href='about.html'>About</a> <br>
     <a href='pos.html'>Parts of speech (POS) table</a>
   </p>
 
-  <p>The table below show the 1,000 most common words in Estonian.</p>
+  <p>The table below show the 1,000 most common words in Estonian, along with their part of speech role. Some words can have more than one and thus appear multiple times.</p>
 
   <div>
+    <div>
     <span style="white-space: nowrap;">
       <input class="pos_selection" type="checkbox" id="pos_noun" value="S" checked>
       <label for="pos_noun">Noun (S)</label>
@@ -54,10 +55,13 @@
       <input class="pos_selection" type="checkbox" id="pos_other" value="NGIO" checked>
       <label for="pos_other">Other (N,O,G,I)</label>
     </span>
+    </div>
     <br>
+    <div>
     <input class="pos_selection" type="button" id="pos_update" value="Update selection">
     <input id="check-all-pos" type="button" value="Check all">
     <input id="uncheck-all-pos" type="button" value="Uncheck all">
+    </div>
   </div>
 
 
